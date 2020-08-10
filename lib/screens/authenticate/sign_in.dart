@@ -24,9 +24,14 @@ class _SignInState extends State<SignIn> {
     return Scaffold(
       backgroundColor: Colors.grey[400],
       appBar: AppBar(
-        backgroundColor: Colors.red,
-        title: Text("Sign In User"),
-        elevation: 0.0,
+        backgroundColor: Colors.white,
+        title: Text(
+          "Sign In User",
+          style: TextStyle(
+            color: Colors.red[900],
+          ),
+        ),
+        elevation: 2.0,
         actions: <Widget>[
           FlatButton.icon(
             onPressed: () {
@@ -35,23 +40,29 @@ class _SignInState extends State<SignIn> {
             label: Text(
               'Register',
               style: TextStyle(
-                color: Colors.white,
+                color: Colors.red[900],
               ),
             ),
             icon: Icon(
               Icons.person_pin,
-              color: Colors.white,
+              color: Colors.red[900],
             ),
           ),
         ],
       ),
       body: Container(
-        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/signin.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 65.0),
         child: Form(
           key: _formKey,
           child: Column(
             children: <Widget>[
-              SizedBox(height: 20.0),
+              SizedBox(height: 60.0),
               TextFormField(
                 decoration: textInputDecoration,
                 validator: (val) =>
@@ -76,11 +87,11 @@ class _SignInState extends State<SignIn> {
               ),
               SizedBox(height: 20.0),
               RaisedButton(
-                color: Colors.red,
+                color: Colors.grey[50],
                 child: Text(
                   "Sign In",
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Colors.red[900],
                   ),
                 ),
                 onPressed: () async {
@@ -99,8 +110,8 @@ class _SignInState extends State<SignIn> {
               Text(
                 error,
                 style: TextStyle(
-                  color: Colors.red,
-                  fontSize: 14.0,
+                  color: Colors.white,
+                  fontSize: 30.0,
                 ),
               ),
             ],

@@ -24,9 +24,14 @@ class _RegisterState extends State<Register> {
     return Scaffold(
       backgroundColor: Colors.grey[400],
       appBar: AppBar(
-        backgroundColor: Colors.red,
-        title: Text("User Registration"),
-        elevation: 0.0,
+        backgroundColor: Colors.white,
+        title: Text(
+          "User Registration",
+          style: TextStyle(
+            color: Colors.red[900],
+          ),
+          ),
+        elevation: 2.0,
         actions: <Widget>[
           FlatButton.icon(
             onPressed: () {
@@ -35,23 +40,29 @@ class _RegisterState extends State<Register> {
             label: Text(
               'Login',
               style: TextStyle(
-                color: Colors.white,
+                color: Colors.red[900],
               ),
             ),
             icon: Icon(
               Icons.person_pin,
-              color: Colors.white,
+              color: Colors.red[900],
             ),
           ),
         ],
       ),
       body: Container(
-        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/signin.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 65.0),
         child: Form(
           key: _formKey,
           child: Column(
             children: <Widget>[
-              SizedBox(height: 20.0),
+              SizedBox(height: 60.0),
               TextFormField(
                 decoration: textInputDecoration,
                 validator: (val) =>
@@ -76,11 +87,11 @@ class _RegisterState extends State<Register> {
               ),
               SizedBox(height: 20.0),
               RaisedButton(
-                color: Colors.red,
+                color: Colors.white,
                 child: Text(
                   "Register",
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Colors.red[900],
                   ),
                 ),
                 onPressed: () async {
