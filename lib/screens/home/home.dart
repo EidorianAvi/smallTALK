@@ -12,12 +12,53 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey,
+      body: Builder(
+        builder: (context) => Container(
+          child: Column(
+            children: <Widget>[
+              SizedBox(
+                height: 60.0,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Align(
+                    alignment: Alignment.center,
+                    child: CircleAvatar(
+                      radius: 100,
+                      // backgroundColor: Colors.white,
+                      child: ClipOval(
+                        child: SizedBox(
+                          width: 180.0,
+                          height: 180.0,
+                          child: Image.asset(
+                            'assets/avatar.png',
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 60.0),
+                    child: IconButton(
+                      icon: Icon(Icons.camera),
+                      onPressed: null,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
       bottomNavigationBar: BottomAppBar(
         child: new Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             IconButton(
+              // child: Text('Topics'),
               color: Colors.red[900],
               icon: Icon(Icons.menu),
               onPressed: () {},
@@ -49,30 +90,6 @@ class _HomeState extends State<Home> {
           ],
         ),
       ),
-      // appBar: AppBar(
-      //   title: Text(
-      //     'Small Talk',
-      //     style: TextStyle(
-      //       color: Colors.red[900],
-      //     ),
-      //   ),
-      //   backgroundColor: Colors.white,
-      //   elevation: 0.0,
-      //   actions: <Widget>[
-      //     FlatButton.icon(
-      //       icon: Icon(Icons.person),
-      //       label: Text(
-      //         'Logout',
-      //         style: TextStyle(
-      //           color: Colors.red[900],
-      //         ),
-      //       ),
-      //       onPressed: () async {
-      //         await _auth.signOut();
-      //       },
-      //     ),
-      //   ],
-      // ),
     );
   }
 }
