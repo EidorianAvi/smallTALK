@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:small_talk/models/user_profile.dart';
+import 'package:small_talk/screens/home/profile.dart';
 import 'package:small_talk/services/auth.dart';
+import 'package:small_talk/services/database.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -8,86 +12,56 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final AuthService _auth = AuthService();
+
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey,
-      body: Builder(
-        builder: (context) => Container(
-          child: Column(
+    // dynamic authUser = _auth.user;
+    // _auth.userFromFirebaseUser(authUser);
+    // print(authUser);
+
+    return StreamProvider<List<UserProfile>>.value(
+      value: DatabaseService().profile,
+      child: Scaffold(
+        backgroundColor: Colors.grey,
+        body: Profile(auth: _auth),
+        bottomNavigationBar: BottomAppBar(
+          child: new Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              SizedBox(
-                height: 60.0,
+              IconButton(
+                // child: Text('Topics'),
+                color: Colors.red[900],
+                icon: Icon(Icons.menu),
+                onPressed: () {},
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Align(
-                    alignment: Alignment.center,
-                    child: CircleAvatar(
-                      radius: 100,
-                      // backgroundColor: Colors.white,
-                      child: ClipOval(
-                        child: SizedBox(
-                          width: 180.0,
-                          height: 180.0,
-                          child: Image.asset(
-                            'assets/avatar.png',
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 60.0),
-                    child: IconButton(
-                      icon: Icon(Icons.camera),
-                      onPressed: null,
-                    ),
-                  ),
-                ],
+              IconButton(
+                color: Colors.red[900],
+                icon: Icon(Icons.message),
+                onPressed: () {},
+              ),
+              IconButton(
+                iconSize: 40.0,
+                color: Colors.red[900],
+                icon: Icon(Icons.home),
+                onPressed: () {},
+              ),
+              IconButton(
+                color: Colors.red[900],
+                icon: Icon(Icons.people),
+                onPressed: () {},
+              ),
+              IconButton(
+                color: Colors.red[900],
+                splashColor: Colors.black,
+                icon: Icon(Icons.logout),
+                onPressed: () async {
+                  await _auth.signOut();
+                },
               ),
             ],
           ),
-        ),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        child: new Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            IconButton(
-              // child: Text('Topics'),
-              color: Colors.red[900],
-              icon: Icon(Icons.menu),
-              onPressed: () {},
-            ),
-            IconButton(
-              color: Colors.red[900],
-              icon: Icon(Icons.message),
-              onPressed: () {},
-            ),
-            IconButton(
-              iconSize: 40.0,
-              color: Colors.red[900],
-              icon: Icon(Icons.home),
-              onPressed: () {},
-            ),
-            IconButton(
-              color: Colors.red[900],
-              icon: Icon(Icons.people),
-              onPressed: () {},
-            ),
-            IconButton(
-              color: Colors.red[900],
-              splashColor: Colors.black,
-              icon: Icon(Icons.logout),
-              onPressed: () async {
-                await _auth.signOut();
-              },
-            ),
-          ],
         ),
       ),
     );

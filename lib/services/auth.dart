@@ -1,11 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:small_talk/models/user.dart';
+import 'package:small_talk/services/database.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   //create user object based on FirebaseUser
-  User _userFromFirebaseUser(FirebaseUser user) {
+  User userFromFirebaseUser(FirebaseUser user) {
     return user != null ? User(uid: user.uid) : null;
   }
 
@@ -13,7 +14,7 @@ class AuthService {
 
   Stream<User> get user {
     return _auth.onAuthStateChanged
-        .map((FirebaseUser user) => _userFromFirebaseUser(user));
+        .map((FirebaseUser user) => userFromFirebaseUser(user));
   }
 
   //sign in with email and password
@@ -23,9 +24,9 @@ class AuthService {
       AuthResult result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       FirebaseUser user = result.user;
-      return _userFromFirebaseUser(user);
+      return userFromFirebaseUser(user);
     } catch (e) {
-      // print(e.toString());
+      print(e.toString());
       return null;
     }
   }
@@ -37,7 +38,11 @@ class AuthService {
       AuthResult result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       FirebaseUser user = result.user;
-      return _userFromFirebaseUser(user);
+      // print(user);
+      await DatabaseService(uid: user.uid).updateUserProfile(
+          user.uid.toString(), "bio", "assets/avatar.png", user.uid.toString());
+
+      return userFromFirebaseUser(user);
     } catch (e) {
       print(e.toString());
       return null;
