@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:small_talk/models/user_profile.dart';
 import 'package:small_talk/screens/home/profile.dart';
@@ -13,25 +14,20 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final AuthService _auth = AuthService();
 
-
   @override
   Widget build(BuildContext context) {
-    // dynamic authUser = _auth.user;
-    // _auth.userFromFirebaseUser(authUser);
-    // print(authUser);
 
     return StreamProvider<List<UserProfile>>.value(
       value: DatabaseService().profile,
       child: Scaffold(
         backgroundColor: Colors.grey,
-        body: Profile(auth: _auth),
+        body: Profile(),
         bottomNavigationBar: BottomAppBar(
           child: new Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               IconButton(
-                // child: Text('Topics'),
                 color: Colors.red[900],
                 icon: Icon(Icons.menu),
                 onPressed: () {},
