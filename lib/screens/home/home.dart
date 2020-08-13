@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:small_talk/models/user_profile.dart';
 import 'package:small_talk/screens/home/profile.dart';
@@ -16,7 +15,6 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-
     return StreamProvider<List<UserProfile>>.value(
       value: DatabaseService().profile,
       child: Scaffold(
@@ -51,7 +49,7 @@ class _HomeState extends State<Home> {
               IconButton(
                 color: Colors.red[900],
                 splashColor: Colors.black,
-                icon: Icon(Icons.logout),
+                icon: Icon(Icons.exit_to_app),
                 onPressed: () async {
                   await _auth.signOut();
                 },
