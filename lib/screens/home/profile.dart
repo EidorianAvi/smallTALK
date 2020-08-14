@@ -1,7 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:small_talk/models/user.dart';
 import 'package:small_talk/screens/home/update_form.dart';
+import 'package:small_talk/services/database.dart';
 import 'package:small_talk/shared/loading_spin.dart';
 
 class Profile extends StatefulWidget {
@@ -10,23 +11,10 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  String uid;
-  dynamic signedInUser;
-  bool loading = true;
-
-  void getUser() async {
-    FirebaseUser user = await FirebaseAuth.instance.currentUser();
-    print(user);
-    setState(() {
-      uid = user.uid;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    if (uid == null) {
-      getUser();
-    }
+
+    final user = Provider.of<User>(context);
 
     void _showUpdatePanel() {
       showModalBottomSheet(
@@ -39,8 +27,8 @@ class _ProfileState extends State<Profile> {
           });
     }
 
-    return StreamBuilder(
-      stream: Firestore.instance.collection('profile').snapshots(),
+    return StreamBuilder<UserData>(
+      stream: DatabaseService(uid: user.uid).userData,
       builder: (context, snapshot) {
         if (!snapshot.hasData) return LoadingSpin();
 
@@ -69,7 +57,7 @@ class _ProfileState extends State<Profile> {
               ),
               SizedBox(height: 25.0),
               Text(
-                snapshot.data.documents[0]['username'],
+                snapshot.data.username,
                 style: TextStyle(
                   fontSize: 20.0,
                   color: Colors.white,
@@ -77,23 +65,24 @@ class _ProfileState extends State<Profile> {
               ),
               SizedBox(height: 25.0),
               Text(
-                snapshot.data.documents[0]['bio'],
+                snapshot.data.bio,
                 style: TextStyle(
                   fontSize: 20.0,
                   color: Colors.white,
                 ),
               ),
-              SizedBox(height: 15.0),
               FlatButton.icon(
                 label: Text(
-                  "",
+                  "Edit Profile",
                   style: TextStyle(
                     color: Colors.white,
+                    fontSize: 12.0,
                   ),
                 ),
                 icon: Icon(
                   Icons.edit,
                   color: Colors.white,
+                  size: 20.0,
                 ),
                 onPressed: () => _showUpdatePanel(),
               ),

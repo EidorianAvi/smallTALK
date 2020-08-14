@@ -1,18 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:small_talk/models/user.dart';
 import 'package:small_talk/models/user_profile.dart';
-import 'package:small_talk/screens/home/profile.dart';
 
 class DatabaseService {
   final String uid;
   DatabaseService({this.uid});
+
   //collection reference
 
-  final CollectionReference userProfile =
+  final CollectionReference userProfiles =
       Firestore.instance.collection('profile');
 
   Future updateUserProfile(
       String username, String bio, String image, String id) async {
-    return await userProfile.document(uid).setData({
+    return await userProfiles.document(uid).setData({
       'username': username,
       'bio': bio,
       'image': image,
@@ -20,7 +21,7 @@ class DatabaseService {
     });
   }
 
-  //Profiel from snapshot
+  //Profile from snapshot
   List<UserProfile> _profilesFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
       return UserProfile(
@@ -35,6 +36,25 @@ class DatabaseService {
   //get profile
 
   Stream<List<UserProfile>> get profile {
-    return userProfile.snapshots().map(_profilesFromSnapshot);
+    return userProfiles.snapshots().map(_profilesFromSnapshot);
   }
+
+  // UserData from snapshot
+  UserData _userDataFromSnapShot(DocumentSnapshot snapshot) {
+    return UserData(
+      uid: uid,
+      username: snapshot.data['username'],
+      bio: snapshot.data['bio'],
+      image: snapshot.data['image'],
+    );
+  }
+
+  // get user doc stream
+
+  Stream<UserData> get userData {
+    return userProfiles.document(uid).snapshots()
+        .map(_userDataFromSnapShot);
+  }
+
+
 }
