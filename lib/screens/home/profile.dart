@@ -18,11 +18,20 @@ class _ProfileState extends State<Profile> {
 
     void _showUpdatePanel() {
       showModalBottomSheet(
+        isScrollControlled: true,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
+          ),
+          backgroundColor: Colors.grey[300],
           context: context,
           builder: (context) {
-            return Container(
-              padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
-              child: UpdateForm(),
+            return Padding(
+              padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+                child: UpdateForm(),
+              ),
             );
           });
     }

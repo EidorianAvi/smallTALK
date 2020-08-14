@@ -26,7 +26,8 @@ class _RegisterState extends State<Register> {
     return loading
         ? Loading()
         : Scaffold(
-            backgroundColor: Colors.grey[400],
+      resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.grey[400],
             appBar: AppBar(
               backgroundColor: Colors.white,
               title: Text(

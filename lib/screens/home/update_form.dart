@@ -28,6 +28,7 @@ class _UpdateFormState extends State<UpdateForm> {
         return Form(
           key: _formKey,
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               SizedBox(height: 30.0),
               Text(

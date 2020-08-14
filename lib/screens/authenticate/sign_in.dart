@@ -26,7 +26,8 @@ class _SignInState extends State<SignIn> {
     return loading
         ? Loading()
         : Scaffold(
-            backgroundColor: Colors.grey[400],
+      resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.grey[400],
             appBar: AppBar(
               backgroundColor: Colors.white,
               title: Text(
@@ -55,13 +56,14 @@ class _SignInState extends State<SignIn> {
               ],
             ),
             body: Container(
+              
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('assets/signin.jpg'),
-                  fit: BoxFit.cover,
+                  image: AssetImage('assets/signin4.jpg'),
+                  fit: BoxFit.fill,
                 ),
               ),
-              padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 65.0),
+              padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -92,7 +94,7 @@ class _SignInState extends State<SignIn> {
                     ),
                     SizedBox(height: 20.0),
                     RaisedButton(
-                      color: Colors.grey[50],
+                      color: Colors.white,
                       child: Text(
                         "Sign In",
                         style: TextStyle(

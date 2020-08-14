@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       value: AuthService().user,
       child: MaterialApp(
         home: Wrapper(),
-        theme: ThemeData(errorColor: Colors.white),
+        theme: ThemeData(errorColor: Colors.red),
       ),
     );
   }

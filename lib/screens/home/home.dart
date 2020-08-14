@@ -18,6 +18,7 @@ class _HomeState extends State<Home> {
     return StreamProvider<List<UserProfile>>.value(
       value: DatabaseService().profile,
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: Colors.grey[700],
         body: Profile(),
         bottomNavigationBar: BottomAppBar(
