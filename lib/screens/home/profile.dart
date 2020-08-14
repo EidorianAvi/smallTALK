@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:small_talk/screens/home/update_form.dart';
 import 'package:small_talk/shared/loading_spin.dart';
 
 class Profile extends StatefulWidget {
@@ -25,6 +26,17 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     if (uid == null) {
       getUser();
+    }
+
+    void _showUpdatePanel() {
+      showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return Container(
+              padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+              child: UpdateForm(),
+            );
+          });
     }
 
     return StreamBuilder(
@@ -74,7 +86,7 @@ class _ProfileState extends State<Profile> {
               SizedBox(height: 15.0),
               FlatButton.icon(
                 label: Text(
-                  "Edit",
+                  "",
                   style: TextStyle(
                     color: Colors.white,
                   ),
@@ -83,7 +95,7 @@ class _ProfileState extends State<Profile> {
                   Icons.edit,
                   color: Colors.white,
                 ),
-                onPressed: () {},
+                onPressed: () => _showUpdatePanel(),
               ),
             ],
           ),
