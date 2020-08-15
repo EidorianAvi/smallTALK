@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:small_talk/models/user_profile.dart';
+import 'package:small_talk/screens/home/favorites.dart';
 import 'package:small_talk/screens/home/profile.dart';
 import 'package:small_talk/services/auth.dart';
 import 'package:small_talk/services/database.dart';
@@ -20,7 +21,13 @@ class _HomeState extends State<Home> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.grey[700],
-        body: Profile(),
+        body: Column(
+          children: [
+            Profile(),
+            SizedBox(height: 25.0),
+            Favorites(),
+          ],
+        ),
         bottomNavigationBar: BottomAppBar(
           child: new Row(
             mainAxisSize: MainAxisSize.max,
