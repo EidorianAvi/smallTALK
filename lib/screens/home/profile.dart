@@ -56,9 +56,9 @@ class _ProfileState extends State<Profile> {
                     child: SizedBox(
                       width: 180.0,
                       height: 180.0,
-                      child: Image.asset(
-                        "assets/avatar.jpg",
-                        fit: BoxFit.fill,
+                      child:  Image.network(
+                          snapshot.data.image,
+                          fit: BoxFit.fill,
                       ),
                     ),
                   ),
@@ -68,11 +68,11 @@ class _ProfileState extends State<Profile> {
               Text(
                 snapshot.data.username,
                 style: TextStyle(
-                  fontSize: 20.0,
-                  color: Colors.white,
+                  fontSize: 22.0,
+                  color: Colors.lightBlue[200],
                 ),
               ),
-              SizedBox(height: 25.0),
+              SizedBox(height: 20.0),
               Text(
                 snapshot.data.bio,
                 style: TextStyle(
