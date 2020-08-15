@@ -56,7 +56,6 @@ class _SignInState extends State<SignIn> {
               ],
             ),
             body: Container(
-              
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('assets/signin5.jpg'),
@@ -70,6 +69,9 @@ class _SignInState extends State<SignIn> {
                   children: <Widget>[
                     SizedBox(height: 60.0),
                     TextFormField(
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
                       decoration: textInputDecoration,
                       validator: (val) =>
                           val.isEmpty ? "Please enter an email" : null,
@@ -81,6 +83,9 @@ class _SignInState extends State<SignIn> {
                     ),
                     SizedBox(height: 20.0),
                     TextFormField(
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
                       decoration:
                           textInputDecoration.copyWith(hintText: "Password"),
                       validator: (val) =>
@@ -91,6 +96,18 @@ class _SignInState extends State<SignIn> {
                           password = val;
                         });
                       },
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        _auth.resetPass(email);
+                      },
+                      child: Container(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                          child: Text("Forgot Password?", style: TextStyle(color: Colors.white)),
+                        ),
+                      ),
                     ),
                     SizedBox(height: 20.0),
                     RaisedButton(

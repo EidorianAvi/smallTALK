@@ -58,11 +58,11 @@ class _RegisterState extends State<Register> {
             body: Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('assets/signin.jpg'),
+                  image: AssetImage('assets/signin5.jpg'),
                   fit: BoxFit.cover,
                 ),
               ),
-              padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 65.0),
+              padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
               child: Form(
                 key: _formKey,
                 child: Column(

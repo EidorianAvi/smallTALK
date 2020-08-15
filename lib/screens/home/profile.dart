@@ -22,7 +22,7 @@ class _ProfileState extends State<Profile> {
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
           ),
-          backgroundColor: Colors.grey[300],
+          backgroundColor: Colors.grey[50],
           context: context,
           builder: (context) {
             return Padding(
@@ -73,8 +73,9 @@ class _ProfileState extends State<Profile> {
               Text(
                 snapshot.data.username,
                 style: TextStyle(
-                  fontSize: 22.0,
-                  color: Colors.lightBlue[200],
+                  fontSize: 24.0,
+                  color: Colors.red[800],
+                  fontWeight: FontWeight.bold
                 ),
               ),
               SizedBox(height: 20.0),

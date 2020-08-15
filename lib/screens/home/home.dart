@@ -20,7 +20,7 @@ class _HomeState extends State<Home> {
       value: DatabaseService().profile,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.grey[700],
+        backgroundColor: Colors.grey,
         body: Column(
           children: [
             Profile(),
