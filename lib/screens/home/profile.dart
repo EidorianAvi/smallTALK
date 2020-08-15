@@ -50,13 +50,18 @@ class _ProfileState extends State<Profile> {
               Align(
                 alignment: Alignment.center,
                 child: CircleAvatar(
-                  radius: 100,
+                  radius: 92,
                   backgroundColor: Colors.grey[200],
                   child: ClipOval(
                     child: SizedBox(
                       width: 180.0,
                       height: 180.0,
-                      child:  Image.network(
+                      child: (snapshot.data.image == 'assets/avatar.png')
+                      ? Image.asset(
+                        "assets/avatar.jpg",
+                        fit: BoxFit.fill
+                      )
+                      : Image.network(
                           snapshot.data.image,
                           fit: BoxFit.fill,
                       ),
