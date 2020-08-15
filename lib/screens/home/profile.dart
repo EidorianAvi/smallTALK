@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:small_talk/models/user.dart';
+import 'package:small_talk/screens/home/favorites.dart';
 import 'package:small_talk/screens/home/update_form.dart';
 import 'package:small_talk/services/database.dart';
-import 'package:small_talk/shared/loading_spin.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -39,7 +39,7 @@ class _ProfileState extends State<Profile> {
     return StreamBuilder<UserData>(
       stream: DatabaseService(uid: user.uid).userData,
       builder: (context, snapshot) {
-        if (!snapshot.hasData) return LoadingSpin();
+        if (!snapshot.hasData) return Text('');
 
         return Padding(
           padding: const EdgeInsets.only(top: 60.0),
@@ -101,6 +101,8 @@ class _ProfileState extends State<Profile> {
                 ),
                 onPressed: () => _showUpdatePanel(),
               ),
+              SizedBox(height: 25.0),
+              Favorites(),
             ],
           ),
         );
