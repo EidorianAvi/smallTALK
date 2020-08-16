@@ -15,3 +15,8 @@ final textInputDecoration = InputDecoration(
     borderSide: BorderSide(color: Colors.white, width: 2.5),
   ),
 );
+
+
+class Constants {
+  static String myName;
+}

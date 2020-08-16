@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:small_talk/models/user.dart';
 import 'package:small_talk/services/database.dart';
@@ -5,6 +6,8 @@ import 'package:small_talk/shared/helper_functions.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final DatabaseService databaseService = DatabaseService();
+  QuerySnapshot userInfo;
 
 
   //create user object based on FirebaseUser
@@ -19,6 +22,7 @@ class AuthService {
         .map((FirebaseUser user) => userFromFirebaseUser(user));
   }
 
+
   //sign in with email and password
 
   Future signInWithEmailAndPassword(String email, String password) async {
@@ -28,6 +32,13 @@ class AuthService {
       FirebaseUser user = result.user;
 
       HelperFunctions.saveUserLoggedInSharedPreference(true);
+      HelperFunctions.saveUserEmailSharedPreference(email);
+
+      databaseService.getUserByEmail(email)
+        .then((val) {
+          userInfo = val;
+          HelperFunctions.saveUsernameSharedPreference(userInfo.documents[0].data['username']);
+      });
 
       return userFromFirebaseUser(user);
     } catch (e) {
@@ -49,6 +60,13 @@ class AuthService {
           email, "Temp Username", "Short bio here", "assets/avatar.png", user.uid.toString());
 
       HelperFunctions.saveUserLoggedInSharedPreference(true);
+      HelperFunctions.saveUserEmailSharedPreference(email);
+
+      databaseService.getUserByEmail(email)
+          .then((val) {
+        userInfo = val;
+        HelperFunctions.saveUsernameSharedPreference(userInfo.documents[0].data['username']);
+      });
 
       return userFromFirebaseUser(user);
     } catch (e) {
