@@ -1,7 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:small_talk/models/user_profile.dart';
 import 'package:small_talk/screens/conversations/conversations_page.dart';
-import 'package:small_talk/screens/home/favorites.dart';
 import 'package:small_talk/screens/home/profile.dart';
 import 'package:small_talk/services/auth.dart';
 import 'package:small_talk/services/database.dart';
@@ -16,6 +16,31 @@ class _HomeState extends State<Home> {
   final AuthService _auth = AuthService();
   int _currentIndex = 2;
 
+   userLogout() {
+    return CupertinoAlertDialog(
+      title: Text("Logout?"),
+      actions: [
+        FlatButton(
+            onPressed: () {
+              _auth.signOut();
+              setState(() {
+                _currentIndex = 2;
+              });
+            },
+            child: Text("Yes"),
+        ),
+        FlatButton(
+          onPressed: () {
+            setState(() {
+              _currentIndex = 2;
+            });
+          },
+          child: Text("No"),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final tabs = [
@@ -23,8 +48,7 @@ class _HomeState extends State<Home> {
       ConversationsPage(),
       Profile(),
       null,
-      null,
-//      _auth.signOut(),
+      userLogout(),
     ];
 
     return StreamProvider<List<UserProfile>>.value(
