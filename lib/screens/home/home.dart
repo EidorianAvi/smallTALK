@@ -52,7 +52,7 @@ class _HomeState extends State<Home> {
     ];
 
     return StreamProvider<List<UserProfile>>.value(
-      value: DatabaseService().profile,
+      value: DatabaseService().profiles,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.grey,

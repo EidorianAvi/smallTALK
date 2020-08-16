@@ -35,12 +35,12 @@ class DatabaseService {
 
   //get profile
 
-  Stream<List<UserProfile>> get profile {
+  Stream<List<UserProfile>> get profiles {
     return userProfiles.snapshots().map(_profilesFromSnapshot);
   }
 
   // UserData from snapshot
-  UserData _userDataFromSnapShot(DocumentSnapshot snapshot) {
+  UserData userDataFromSnapShot(DocumentSnapshot snapshot) {
     return UserData(
       uid: uid,
       username: snapshot.data['username'],
@@ -53,8 +53,26 @@ class DatabaseService {
 
   Stream<UserData> get userData {
     return userProfiles.document(uid).snapshots()
-        .map(_userDataFromSnapShot);
+        .map(userDataFromSnapShot);
   }
 
+  // find user by username
+
+  getUserByUsername(String username) async {
+    return await Firestore.instance.collection('profile')
+        .where("username", isEqualTo: username)
+        .getDocuments();
+  }
+
+  //Used to create a conversation instance
+
+  createConversation(String conversationId, conversationMap) {
+    try{
+      Firestore.instance.collection('conversation')
+          .document(conversationId).setData(conversationMap);
+    } catch(e) {
+      print(e.toString());
+    }
+  }
 
 }
