@@ -16,6 +16,7 @@ class _SignInState extends State<SignIn> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
 
+
   String email = '';
   String password = '';
   String error = '';

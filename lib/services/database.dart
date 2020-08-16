@@ -12,8 +12,9 @@ class DatabaseService {
       Firestore.instance.collection('profile');
 
   Future updateUserProfile(
-      String username, String bio, String image, String id) async {
+      String email, String username, String bio, String image, String id) async {
     return await userProfiles.document(uid).setData({
+      'email': email,
       'username': username,
       'bio': bio,
       'image': image,
@@ -25,6 +26,7 @@ class DatabaseService {
   List<UserProfile> _profilesFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
       return UserProfile(
+        email: doc.data['email'] ?? '',
         username: doc.data['username'] ?? '',
         bio: doc.data['bio'] ?? '',
         image: doc.data['image'] ?? "",
@@ -43,6 +45,7 @@ class DatabaseService {
   UserData userDataFromSnapShot(DocumentSnapshot snapshot) {
     return UserData(
       uid: uid,
+      email: snapshot.data['email'],
       username: snapshot.data['username'],
       bio: snapshot.data['bio'],
       image: snapshot.data['image'],
@@ -61,6 +64,18 @@ class DatabaseService {
   getUserByUsername(String username) async {
     return await Firestore.instance.collection('profile')
         .where("username", isEqualTo: username)
+        .getDocuments();
+  }
+
+  getUserByUid(String uid) async {
+    return await Firestore.instance.collection('profile')
+        .where("uid", isEqualTo: uid)
+        .getDocuments();
+  }
+
+  getUserByEmail(String email) async {
+    return await Firestore.instance.collection('profile')
+        .where("email", isEqualTo: email)
         .getDocuments();
   }
 

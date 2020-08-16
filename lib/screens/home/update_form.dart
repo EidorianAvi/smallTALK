@@ -117,6 +117,7 @@ class _UpdateFormState extends State<UpdateForm> {
                     await uploadPhoto();
                     if(_formKey.currentState.validate()) {
                       await DatabaseService(uid: user.uid).updateUserProfile(
+                          userData.email,
                           _currentUsername ?? userData.username,
                           _currentBio ?? userData.bio,
                           _currentImageUrl ?? userData.image,
