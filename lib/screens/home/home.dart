@@ -2,8 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:small_talk/models/user_profile.dart';
 import 'package:small_talk/screens/conversations/conversations_page.dart';
+import 'package:small_talk/screens/friends/friends_page.dart';
 import 'package:small_talk/screens/home/profile.dart';
 import 'package:small_talk/screens/logout.dart';
+import 'package:small_talk/screens/topics/topics_page.dart';
 import 'package:small_talk/services/auth.dart';
 import 'package:small_talk/services/database.dart';
 import 'package:provider/provider.dart';
@@ -60,10 +62,10 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final tabs = [
-      null,
+      TopicsPage(),
       ConversationsPage(),
       Profile(),
-      null,
+      FriendsPage(),
       Logout(userLogout()),
     ];
 

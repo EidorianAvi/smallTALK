@@ -87,6 +87,7 @@ class AuthService {
   //sign out
   Future signOut() async {
     try {
+      HelperFunctions.saveUserLoggedInSharedPreference(false);
       return await _auth.signOut();
     } catch (e) {
       print(e.toString());

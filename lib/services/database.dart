@@ -111,4 +111,10 @@ class DatabaseService {
         .snapshots();
   }
 
+  getTopics()async{
+    return await Firestore.instance.collection('topics')
+        .orderBy("topic")
+        .snapshots();
+  }
+
 }
