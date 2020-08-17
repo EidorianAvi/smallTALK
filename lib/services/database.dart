@@ -12,13 +12,14 @@ class DatabaseService {
       Firestore.instance.collection('profile');
 
   Future updateUserProfile(
-      String email, String username, String bio, String image, String id) async {
+      String email, String username, String bio, String image, String id, List favorites) async {
     return await userProfiles.document(uid).setData({
       'email': email,
       'username': username,
       'bio': bio,
       'image': image,
       "id": id,
+      "favorites": favorites,
     });
   }
 
@@ -31,6 +32,7 @@ class DatabaseService {
         bio: doc.data['bio'] ?? '',
         image: doc.data['image'] ?? "",
         id: doc.data['id'] ?? "",
+        favorites: doc.data['favorites'],
       );
     }).toList();
   }
@@ -49,6 +51,7 @@ class DatabaseService {
       username: snapshot.data['username'],
       bio: snapshot.data['bio'],
       image: snapshot.data['image'],
+      favorites: snapshot.data['favorites'],
     );
   }
 
@@ -58,8 +61,6 @@ class DatabaseService {
     return userProfiles.document(uid).snapshots()
         .map(userDataFromSnapShot);
   }
-
-  // find user by username
 
   getUserByUsername(String username) async {
     return await Firestore.instance.collection('profile')
@@ -78,8 +79,6 @@ class DatabaseService {
         .where("email", isEqualTo: email)
         .getDocuments();
   }
-
-  //Used to create a conversation instance
 
   createConversation(String conversationId, conversationMap) {
     try{

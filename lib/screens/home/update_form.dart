@@ -122,6 +122,7 @@ class _UpdateFormState extends State<UpdateForm> {
                           _currentBio ?? userData.bio,
                           _currentImageUrl ?? userData.image,
                           userData.uid,
+                          userData.favorites,
                       );
                       Navigator.pop(context);
                     }
