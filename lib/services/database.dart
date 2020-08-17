@@ -90,4 +90,25 @@ class DatabaseService {
     }
   }
 
+  addConversationMessages(String  conversationId, messageMap) {
+    Firestore.instance.collection('conversation')
+        .document(conversationId)
+        .collection('messages')
+        .add(messageMap).catchError((e) {print(e.toString());});
+  }
+
+  getConversationMessages(String  conversationId) async {
+    return await Firestore.instance.collection('conversation')
+        .document(conversationId)
+        .collection('messages')
+        .orderBy("time", descending: false)
+        .snapshots();
+  }
+
+  getUserConversations(String username) async {
+    return await Firestore.instance.collection('conversation')
+        .where("users", arrayContains: username)
+        .snapshots();
+  }
+
 }
