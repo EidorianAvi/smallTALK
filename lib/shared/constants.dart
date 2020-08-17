@@ -19,5 +19,6 @@ final textInputDecoration = InputDecoration(
 
 class Constants {
   static String myName;
-  static List favorites;
+  static String myImage;
+  static List myFavorites;
 }

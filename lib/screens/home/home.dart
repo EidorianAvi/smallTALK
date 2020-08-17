@@ -29,6 +29,8 @@ class _HomeState extends State<Home> {
 
   getUserInfo() async {
     Constants.myName =  await HelperFunctions.getUsernameSharedPreferences();
+    Constants.myImage = await HelperFunctions.getUserImageSharedPreferences();
+    Constants.myFavorites = await HelperFunctions.getUserFavoritesSharedPreferences();
   }
 
    userLogout() {

@@ -38,6 +38,9 @@ class AuthService {
         .then((val) {
           userInfo = val;
           HelperFunctions.saveUsernameSharedPreference(userInfo.documents[0].data['username']);
+          HelperFunctions.saveUserImageSharedPreference(userInfo.documents[0].data['image']);
+          HelperFunctions.saveUserFavoritesSharedPreference(userInfo.documents[0].data['favorites']);
+
       });
 
       return userFromFirebaseUser(user);
@@ -66,6 +69,8 @@ class AuthService {
           .then((val) {
         userInfo = val;
         HelperFunctions.saveUsernameSharedPreference(userInfo.documents[0].data['username']);
+        HelperFunctions.saveUserImageSharedPreference(userInfo.documents[0].data['image']);
+        HelperFunctions.saveUserFavoritesSharedPreference(userInfo.documents[0].data['favorites']);
       });
 
       return userFromFirebaseUser(user);
@@ -87,6 +92,9 @@ class AuthService {
   //sign out
   Future signOut() async {
     try {
+      HelperFunctions.saveUsernameSharedPreference('');
+      HelperFunctions.saveUserImageSharedPreference('');
+      HelperFunctions.saveUserFavoritesSharedPreference([]);
       HelperFunctions.saveUserLoggedInSharedPreference(false);
       return await _auth.signOut();
     } catch (e) {
