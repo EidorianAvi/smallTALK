@@ -37,6 +37,8 @@ class ConversationTile extends StatelessWidget {
                     images.where((image) => image != userData.image).toString()
                         .replaceAll("(", "")
                         .replaceAll(")", ""),
+                    "username",
+                    "image",
                     conversationId)
             ));
           },

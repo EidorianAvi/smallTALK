@@ -6,11 +6,13 @@ import 'package:small_talk/shared/constants.dart';
 
 class Conversation extends StatefulWidget {
 
-  final String conversationId;
   String username;
   String image;
+  String loggedInUser;
+  String loggedInUserImage;
+  final String conversationId;
 
-  Conversation(this.username, this.image, this.conversationId);
+  Conversation(this.username, this.image, this.loggedInUser, this.loggedInUserImage , this. conversationId);
 
 
   @override
@@ -51,7 +53,7 @@ class _ConversationState extends State<Conversation> {
               itemCount: snapshot.data.documents.length,
                 itemBuilder: (context, index) {
                 return MessageTile(snapshot.data.documents[index].data["message"],
-                snapshot.data.documents[index].data['sentBy'] == Constants.myName);
+                snapshot.data.documents[index].data['sentBy'] == widget.loggedInUser);
                 }),
           ) : Container(
             child: Text("Loading"),
@@ -65,10 +67,12 @@ class _ConversationState extends State<Conversation> {
 
   sendMessage() {
 
+    print(Constants.myName);
+
     if(messageController.text.isNotEmpty){
       Map<String, dynamic>  messageMap  =  {
         "message": messageController.text,
-        "sentBy": Constants.myName,
+        "sentBy": widget.loggedInUser,
         "time": DateTime.now().millisecondsSinceEpoch,
       };
       setState(() {

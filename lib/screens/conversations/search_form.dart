@@ -116,7 +116,7 @@ class _SearchFormState extends State<SearchForm> {
         context,
         MaterialPageRoute(
             builder: (context) => Conversation(searchedUser['username'],
-                searchedUser['image'], conversationId)));
+                searchedUser['image'], loggedInUser.username, loggedInUser. image, conversationId)));
   }
 
   @override
