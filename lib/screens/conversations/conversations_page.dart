@@ -47,8 +47,8 @@ class _ConversationsPageState extends State<ConversationsPage> {
                   itemCount: snapshot.data.documents.length,
                   itemBuilder: (context, index) {
                     return ConversationTile(
-                        username: snapshot.data.documents[index].data['users'],
-                        image: snapshot.data.documents[index].data['userImages'],
+                        usernames: snapshot.data.documents[index].data['users'],
+                        images: snapshot.data.documents[index].data['userImages'],
                         conversationId: snapshot.data.documents[index].data['conversationId'],
                     );
                   }),
