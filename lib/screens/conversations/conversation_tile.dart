@@ -31,8 +31,12 @@ class ConversationTile extends StatelessWidget {
           onTap: () {
             Navigator.push(context, MaterialPageRoute(
                 builder: (context) => Conversation(
-                    usernames.where((username) => username != userData.username).toString(),
-                    images.where((image) => image != userData.image).toString(),
+                    usernames.where((username) => username != userData.username).toString()
+                        .replaceAll("(", "")
+                        .replaceAll(")", ""),
+                    images.where((image) => image != userData.image).toString()
+                        .replaceAll("(", "")
+                        .replaceAll(")", ""),
                     conversationId)
             ));
           },
