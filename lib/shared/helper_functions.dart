@@ -8,6 +8,8 @@ class HelperFunctions {
   static String sharedPreferenceUserImageKey = "USERIMAGEKEY";
   static String sharedPreferenceUserBioKey = "USERBIOKEY";
   static String sharedPreferenceUserFavoritesKey = "USERFAVORITESKEY";
+  static String sharedPreferenceUserUidKey = "USERUIDKEY";
+
 
   // grabs shared preferences
   static Future<void> saveUserEmailSharedPreference(String email) async {
@@ -34,6 +36,10 @@ class HelperFunctions {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return await prefs.setStringList(sharedPreferenceUserFavoritesKey, favorites);
   }
+  static Future<void> saveUserUidSharedPreference(String uid) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return await prefs.setString(sharedPreferenceUserUidKey, uid);
+  }
 
   //grabs data from shared preferences
   static Future<String> getUserEmailSharedPreferences() async {
@@ -59,5 +65,9 @@ class HelperFunctions {
   static Future<List<String>> getUserFavoritesSharedPreferences() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getStringList(sharedPreferenceUserFavoritesKey);
+  }
+  static Future<String> getUserUidSharedPreferences() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString(sharedPreferenceUserUidKey);
   }
 }

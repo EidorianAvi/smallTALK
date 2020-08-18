@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:small_talk/models/user.dart';
 import 'package:small_talk/models/user_profile.dart';
+import 'package:small_talk/shared/helper_functions.dart';
 
 class DatabaseService {
   final String uid;
@@ -13,6 +14,10 @@ class DatabaseService {
 
   Future updateUserProfile(
       String email, String username, String bio, String image, String id, List favorites) async {
+
+    HelperFunctions.saveUsernameSharedPreference(username);
+    HelperFunctions.saveUserImageSharedPreference(image);
+
     return await userProfiles.document(uid).setData({
       'email': email,
       'username': username,

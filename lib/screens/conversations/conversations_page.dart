@@ -5,6 +5,7 @@ import 'package:small_talk/services/database.dart';
 import 'package:small_talk/shared/constants.dart';
 
 class ConversationsPage extends StatefulWidget {
+
   @override
   _ConversationsPageState createState() => _ConversationsPageState();
 }
@@ -32,11 +33,11 @@ class _ConversationsPageState extends State<ConversationsPage> {
           return snapshot.hasData ? ListView.builder(
             itemCount: snapshot.data.documents.length,
               itemBuilder: (context, index){
+              print(snapshot.data.documents[0].data['users'][0]);
                 return ConversationTile(
-                  snapshot.data.documents[index].data["conversationId"]
-                      .toString().replaceAll("_", " ")
-                      .replaceAll(Constants.myName, " "),
-                  snapshot.data.documents[index].data["conversationId"]
+                  snapshot.data.documents[index].data['users'][0],
+                  snapshot.data.documents[index].data['userImages'][0],
+                  snapshot.data.documents[index].data['userIds'][0],
                 );
               }) : Container();
     });
@@ -64,6 +65,7 @@ class _ConversationsPageState extends State<ConversationsPage> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: Colors.grey,
       appBar: AppBar(

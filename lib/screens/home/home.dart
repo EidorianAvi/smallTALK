@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 import 'package:small_talk/shared/constants.dart';
 import 'package:small_talk/shared/helper_functions.dart';
 
+
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
@@ -21,6 +22,7 @@ class _HomeState extends State<Home> {
   final AuthService _auth = AuthService();
   int _currentIndex = 2;
 
+
   @override
   void initState() {
     getUserInfo();
@@ -29,8 +31,6 @@ class _HomeState extends State<Home> {
 
   getUserInfo() async {
     Constants.myName =  await HelperFunctions.getUsernameSharedPreferences();
-    Constants.myImage = await HelperFunctions.getUserImageSharedPreferences();
-    Constants.myFavorites = await HelperFunctions.getUserFavoritesSharedPreferences();
   }
 
    userLogout() {
@@ -63,6 +63,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+
     final tabs = [
       TopicsPage(),
       ConversationsPage(),

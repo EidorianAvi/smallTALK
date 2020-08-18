@@ -21,4 +21,5 @@ class Constants {
   static String myName;
   static String myImage;
   static List myFavorites;
+  static String myUid;
 }

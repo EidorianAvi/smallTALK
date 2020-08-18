@@ -3,12 +3,14 @@ import 'package:small_talk/screens/conversations/message_tile.dart';
 import 'package:small_talk/services/database.dart';
 import 'package:small_talk/shared/constants.dart';
 
+
 class Conversation extends StatefulWidget {
 
   final String conversationId;
   String username;
+  String image;
 
-  Conversation(this.username, this.conversationId);
+  Conversation(this.username, this.image, this.conversationId);
 
 
   @override

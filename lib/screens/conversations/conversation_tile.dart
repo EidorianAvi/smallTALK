@@ -4,14 +4,16 @@ import 'package:small_talk/screens/conversations/conversation.dart';
 class ConversationTile extends StatelessWidget {
   final String username;
   final String conversationId;
-  ConversationTile(this.username, this.conversationId);
+  final String image;
+  ConversationTile(this.username, this.image, this.conversationId);
+
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(
-            builder: (context) => Conversation(username, conversationId)
+            builder: (context) => Conversation(username, image, conversationId)
         ));
       },
       child: Container(
@@ -27,7 +29,7 @@ class ConversationTile extends StatelessWidget {
             ),
             SizedBox(width: 10.0),
             Text(
-              username.toUpperCase(),
+              username,
               style: TextStyle(
                   color: Colors.red[900],
                   fontSize: 20.0

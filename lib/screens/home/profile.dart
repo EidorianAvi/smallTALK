@@ -17,6 +17,7 @@ class _ProfileState extends State<Profile> {
     final user = Provider.of<User>(context);
 
     void _showUpdatePanel() {
+      print(user.uid);
       showModalBottomSheet(
         isScrollControlled: true,
           shape: RoundedRectangleBorder(
