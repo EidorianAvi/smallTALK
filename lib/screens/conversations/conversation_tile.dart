@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:small_talk/models/user.dart';
@@ -24,43 +25,70 @@ class ConversationTile extends StatelessWidget {
 
         UserData userData = snapshot.data;
 
-//        dynamic otherUser = usernames.where((username) => username != userData.username);
-//        dynamic otherUserImage = images.where((image) => image != userData.image);
+        // Can't set these variables without the page twitching for a second. Can't assign them inside the return either.
+
+//        String otherUser = usernames.where((username) => username != userData.username).toString()
+//            .replaceAll("(", "")
+//            .replaceAll(")", "");
+//        String otherUserImage = images.where((image) => image != userData.image).toString()
+//            .replaceAll("(", "")
+//            .replaceAll(")", "");
 
         return snapshot.hasData ? GestureDetector(
           onTap: () {
             Navigator.push(context, MaterialPageRoute(
                 builder: (context) => Conversation(
                     usernames.where((username) => username != userData.username).toString()
-                        .replaceAll("(", "")
-                        .replaceAll(")", ""),
+                      .replaceAll("(", "")
+                      .replaceAll(")", ""),
                     images.where((image) => image != userData.image).toString()
-                        .replaceAll("(", "")
-                        .replaceAll(")", ""),
-                    "username",
-                    "image",
-                    conversationId)
+                      .replaceAll("(", "")
+                      .replaceAll(")", ""),
+                    userData.username,
+                    userData.image,
+                    conversationId,
+                ),
             ));
           },
           child: Container(
-            margin: EdgeInsets.fromLTRB(6.0, 6.0, 6.0, 0.0),
-            color: Colors.white,
-            padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
+            decoration: BoxDecoration(
+              color: Colors.grey[300],
+              borderRadius: BorderRadius.all(Radius.circular(30.0)),
+            ),
+            margin: EdgeInsets.fromLTRB(9.0, 6.0, 9.0, 0.0),
+            padding: EdgeInsets.fromLTRB(5.0, 3.0, 35.0, 3.0),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
+                CircleAvatar(
+                  radius: 30,
+                  backgroundColor: Colors.grey[800],
+                  child: ClipOval(
+                    child: SizedBox(
+                      width: 60.0,
+                      height: 60.0,
+                      child: images.where((image) => image != userData.image).toString()
+                                .replaceAll("(", "")
+                                .replaceAll(")", "")!= null
+                          ? Image.network(
+                          images.where((image) => image != userData.image).toString()
+                                .replaceAll("(", "")
+                                .replaceAll(")", ""),
+                        fit: BoxFit.fill)
+                          : Image.asset(
+                        "assets/avatar.jpg",
+                        fit: BoxFit.fill,
+                      ),
+                    ),
                   ),
                 ),
-                SizedBox(width: 10.0),
                 Text(
-                    usernames.where((username) => username != userData.username).toString()
+                  usernames.where((username) => username != userData.username).toString()
                       .replaceAll("(", "")
                       .replaceAll(")", ""),
                   style: TextStyle(
                       color: Colors.red[900],
-                      fontSize: 20.0
+                      fontSize: 18.0
                   ),
                 ),
               ],

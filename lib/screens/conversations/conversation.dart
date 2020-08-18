@@ -43,7 +43,6 @@ class _ConversationState extends State<Conversation> {
 
   Widget messageList(){
     if(messageStream != null) {
-      print(messageStream);
       return StreamBuilder(
         stream: messageStream,
           builder: (context, snapshot){
@@ -52,8 +51,11 @@ class _ConversationState extends State<Conversation> {
               shrinkWrap: true,
               itemCount: snapshot.data.documents.length,
                 itemBuilder: (context, index) {
-                return MessageTile(snapshot.data.documents[index].data["message"],
-                snapshot.data.documents[index].data['sentBy'] == widget.loggedInUser);
+                return MessageTile(
+                    loggedInUserImage: widget.loggedInUserImage,
+                    otherUserImage: widget.image,
+                    message: snapshot.data.documents[index].data["message"],
+                    sentByMe: snapshot.data.documents[index].data['sentBy'] == widget.loggedInUser);
                 }),
           ) : Container(
             child: Text("Loading"),
