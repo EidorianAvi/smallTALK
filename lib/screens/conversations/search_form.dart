@@ -27,7 +27,7 @@ class _SearchFormState extends State<SearchForm> {
     });
   }
 
-  Widget searchList() {
+  Widget searchList(loggedInUser) {
     return searchSnapshot != null
         ? ListView.builder(
             shrinkWrap: true,
@@ -36,12 +36,13 @@ class _SearchFormState extends State<SearchForm> {
               return SearchTile(
                 username: searchSnapshot.documents[0].data["username"],
                 image: searchSnapshot.documents[0].data["image"],
+                loggedInUser: loggedInUser,
               );
             })
         : Container();
   }
 
-  Widget SearchTile({String username, String image}) {
+  Widget SearchTile({String username, String image, UserData loggedInUser}) {
     var searchedUser = searchSnapshot.documents[0].data;
 
     return Container(
@@ -79,7 +80,7 @@ class _SearchFormState extends State<SearchForm> {
                 ),
                 onPressed: () {
                   Navigator.pop(context);
-                  startConversation(searchedUser);
+                  startConversation(searchedUser, loggedInUser);
                 },
               ),
             ],
@@ -97,17 +98,18 @@ class _SearchFormState extends State<SearchForm> {
     }
   }
 
-  startConversation(searchedUser) {
-    List<String> users = [searchedUser['username'], Constants.myName];
-    List<String> userIds = [searchedUser['id'], Constants.myUid];
-    List<String> userImages = [searchedUser['image'], Constants.myImage];
+  startConversation(searchedUser, loggedInUser) {
+    List<String> users = [searchedUser['username'], loggedInUser.username];
+    List<String> userIds = [searchedUser['id'], loggedInUser.uid];
+    List<String> userImages = [searchedUser['image'], loggedInUser.image];
     String conversationId =
-        getConversationId(searchedUser['id'], Constants.myUid);
+        getConversationId(searchedUser['id'], loggedInUser.uid);
     Map<String, dynamic> conversationMap = {
       "users": users,
       "userIds": userIds,
       "userImages": userImages,
       "conversationId": conversationId,
+      "time": DateTime.now().millisecondsSinceEpoch,
     };
     databaseService.createConversation(conversationId, conversationMap);
     Navigator.push(
@@ -123,10 +125,8 @@ class _SearchFormState extends State<SearchForm> {
 
     return StreamBuilder<UserData>(
         stream: DatabaseService(uid: user.uid).userData,
-        // ignore: missing_return
         builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return Form(
+            return snapshot.hasData ? Form(
               key: _formKey,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -162,11 +162,10 @@ class _SearchFormState extends State<SearchForm> {
                     ],
                   ),
                   SizedBox(height: 40.0),
-                  searchList(),
+                  searchList(snapshot.data),
                 ],
               ),
-            );
-          }
+            ) : Container() ;
         });
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:small_talk/models/user.dart';
 import 'package:small_talk/models/user_profile.dart';
 import 'package:small_talk/screens/conversations/conversations_page.dart';
 import 'package:small_talk/screens/friends/friends_page.dart';
@@ -64,9 +65,11 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
 
+    final user = Provider.of<User>(context);
+
     final tabs = [
       TopicsPage(),
-      ConversationsPage(),
+      ConversationsPage(user.uid),
       Profile(),
       FriendsPage(),
       Logout(userLogout()),

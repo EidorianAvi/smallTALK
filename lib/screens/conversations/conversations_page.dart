@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:small_talk/models/user.dart';
 import 'package:small_talk/screens/conversations/conversation_tile.dart';
 import 'package:small_talk/screens/conversations/search_form.dart';
 import 'package:small_talk/services/database.dart';
-import 'package:small_talk/shared/constants.dart';
 
 class ConversationsPage extends StatefulWidget {
+
+  String uid;
+
+  ConversationsPage(this.uid);
 
   @override
   _ConversationsPageState createState() => _ConversationsPageState();
@@ -14,34 +19,44 @@ class _ConversationsPageState extends State<ConversationsPage> {
 
   DatabaseService databaseService = DatabaseService();
   Stream conversationsStream;
+  UserData user;
 
   @override
   void initState() {
-    databaseService.getUserConversations(Constants.myName)
-        .then((val) {
-      setState(() {
-        conversationsStream = val;
-      });
+    getUserConversations()
+      .then((val) {
+       setState(() {
+         conversationsStream = val;
+       });
     });
     super.initState();
   }
 
-  Widget conversationList() {
-    return StreamBuilder(
-      stream: conversationsStream,
-        builder: (context, snapshot){
-          return snapshot.hasData ? ListView.builder(
-            itemCount: snapshot.data.documents.length,
-              itemBuilder: (context, index){
-              print(snapshot.data.documents[0].data['users'][0]);
-                return ConversationTile(
-                  snapshot.data.documents[index].data['users'][0],
-                  snapshot.data.documents[index].data['userImages'][0],
-                  snapshot.data.documents[index].data['userIds'][0],
-                );
-              }) : Container();
-    });
+  getUserConversations() async {
+    return await databaseService.getUserConversations(widget.uid);
   }
+
+
+  Widget conversationList(loggedInUser){
+      return loggedInUser != null ? StreamBuilder(
+          stream: conversationsStream,
+          builder: (context, snapshot){
+            return snapshot.hasData ? SingleChildScrollView(
+              child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: snapshot.data.documents.length,
+                  itemBuilder: (context, index) {
+                    return ConversationTile(
+                        username: snapshot.data.documents[index].data['users'],
+                        image: snapshot.data.documents[index].data['userImages'],
+                        conversationId: snapshot.data.documents[index].data['conversationId'],
+                    );
+                  }),
+            ) : Container();
+          }
+      ) : Container();
+  }
+
 
   void _showSearchPanel() {
     showModalBottomSheet(
@@ -66,25 +81,33 @@ class _ConversationsPageState extends State<ConversationsPage> {
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
-      backgroundColor: Colors.grey,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Text("Conversations", style: TextStyle(color: Colors.red[900])),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-                Icons.search,
-              color: Colors.red[900],
-            ),
-            onPressed: (){
-              _showSearchPanel();
-            },
+    final user = Provider.of<User>(context);
+
+    return user != null ? StreamBuilder(
+      stream: DatabaseService(uid: user.uid).userData,
+      builder: (context, snapshot) {
+        return snapshot.hasData ?
+        Scaffold(
+          backgroundColor: Colors.grey,
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            title: Text("Conversations", style: TextStyle(color: Colors.red[900])),
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(
+                  Icons.search,
+                  color: Colors.red[900],
+                ),
+                onPressed: (){
+                  _showSearchPanel();
+                },
+              ),
+            ],
           ),
-        ],
-      ),
-      body: conversationList(),
-    );
+          body: conversationList(snapshot.data),
+        ) : Container();
+      },
+    ) : Container();
   }
 }
 

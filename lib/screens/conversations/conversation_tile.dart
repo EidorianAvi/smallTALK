@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:small_talk/screens/conversations/conversation.dart';
 
 class ConversationTile extends StatelessWidget {
-  final String username;
+  final List username;
   final String conversationId;
-  final String image;
-  ConversationTile(this.username, this.image, this.conversationId);
+  final List image;
+  ConversationTile({this.username, this.image, this.conversationId});
 
 
   @override
@@ -13,7 +13,7 @@ class ConversationTile extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(
-            builder: (context) => Conversation(username, image, conversationId)
+            builder: (context) => Conversation(username[0], image[0], conversationId)
         ));
       },
       child: Container(
@@ -29,7 +29,7 @@ class ConversationTile extends StatelessWidget {
             ),
             SizedBox(width: 10.0),
             Text(
-              username,
+              username[0],
               style: TextStyle(
                   color: Colors.red[900],
                   fontSize: 20.0

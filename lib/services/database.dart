@@ -109,9 +109,10 @@ class DatabaseService {
         .snapshots();
   }
 
-  getUserConversations(String username) async {
+  getUserConversations(String uid) async {
     return await Firestore.instance.collection('conversation')
-        .where("users", arrayContains: username)
+        .where("userIds", arrayContains: uid)
+        .orderBy("time", descending: true)
         .snapshots();
   }
 
