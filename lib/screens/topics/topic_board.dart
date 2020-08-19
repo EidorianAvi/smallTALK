@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:small_talk/screens/topics/post_form.dart';
 
 class TopicBoard extends StatefulWidget {
 
@@ -10,6 +12,25 @@ class TopicBoard extends StatefulWidget {
 }
 
 class _TopicBoardState extends State<TopicBoard> {
+
+  TextEditingController messageController = new TextEditingController();
+
+
+  postTopicForm(context) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context){
+          return AlertDialog(
+            content: Stack(
+            overflow: Overflow.visible,
+            children: [PostForm()],
+        ),
+      );
+    });
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +56,9 @@ class _TopicBoardState extends State<TopicBoard> {
         color: Colors.grey[400]
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          postTopicForm(context);
+        },
         child: Icon(Icons.add, color: Colors.red[900]),
         backgroundColor: Colors.white,
       ),
