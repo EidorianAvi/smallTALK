@@ -88,7 +88,7 @@ class _ConversationsPageState extends State<ConversationsPage> {
       builder: (context, snapshot) {
         return snapshot.hasData ?
         Scaffold(
-          backgroundColor: Colors.grey,
+          backgroundColor: Colors.grey[400],
           appBar: AppBar(
             backgroundColor: Colors.white,
             title: Text("Conversations", style: TextStyle(color: Colors.red[900])),

@@ -57,7 +57,10 @@ class _TopicsPageState extends State<TopicsPage> {
           ),
         ],
       ),
-      body: topicList(),
+      body: Container(
+        color: Colors.grey[400],
+        child: topicList(),
+      ),
     );
   }
 }

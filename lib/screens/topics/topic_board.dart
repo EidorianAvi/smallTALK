@@ -32,7 +32,7 @@ class _TopicBoardState extends State<TopicBoard> {
         ),
       ),
       body: Container(
-        color: Colors.grey[300]
+        color: Colors.grey[400]
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},

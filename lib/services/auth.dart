@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:small_talk/models/user.dart';
 import 'package:small_talk/services/database.dart';
-import 'package:small_talk/shared/helper_functions.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -31,16 +30,16 @@ class AuthService {
           email: email, password: password);
       FirebaseUser user = result.user;
 
-      HelperFunctions.saveUserLoggedInSharedPreference(true);
-      HelperFunctions.saveUserEmailSharedPreference(email);
+//      HelperFunctions.saveUserLoggedInSharedPreference(true);
+//      HelperFunctions.saveUserEmailSharedPreference(email);
 
       databaseService.getUserByEmail(email)
         .then((val) {
           userInfo = val;
-          HelperFunctions.saveUsernameSharedPreference(userInfo.documents[0].data['username']);
-          HelperFunctions.saveUserImageSharedPreference(userInfo.documents[0].data['image']);
-          HelperFunctions.saveUserFavoritesSharedPreference(userInfo.documents[0].data['favorites']);
-          HelperFunctions.saveUserUidSharedPreference(userInfo.documents[0].data['id']);
+//          HelperFunctions.saveUsernameSharedPreference(userInfo.documents[0].data['username']);
+//          HelperFunctions.saveUserImageSharedPreference(userInfo.documents[0].data['image']);
+//          HelperFunctions.saveUserFavoritesSharedPreference(userInfo.documents[0].data['favorites']);
+//          HelperFunctions.saveUserUidSharedPreference(userInfo.documents[0].data['id']);
       });
 
       return userFromFirebaseUser(user);
@@ -62,16 +61,16 @@ class AuthService {
       await DatabaseService(uid: user.uid).updateUserProfile(
           email, "Temp Username", "Short bio here", "assets/avatar.png", user.uid.toString(), []);
 
-      HelperFunctions.saveUserLoggedInSharedPreference(true);
-      HelperFunctions.saveUserEmailSharedPreference(email);
+//      HelperFunctions.saveUserLoggedInSharedPreference(true);
+//      HelperFunctions.saveUserEmailSharedPreference(email);
 
       databaseService.getUserByEmail(email)
           .then((val) {
         userInfo = val;
-        HelperFunctions.saveUsernameSharedPreference(userInfo.documents[0].data['username']);
-        HelperFunctions.saveUserImageSharedPreference(userInfo.documents[0].data['image']);
-        HelperFunctions.saveUserFavoritesSharedPreference(userInfo.documents[0].data['favorites']);
-        HelperFunctions.saveUserUidSharedPreference(userInfo.documents[0].data['id']);
+//        HelperFunctions.saveUsernameSharedPreference(userInfo.documents[0].data['username']);
+//        HelperFunctions.saveUserImageSharedPreference(userInfo.documents[0].data['image']);
+//        HelperFunctions.saveUserFavoritesSharedPreference(userInfo.documents[0].data['favorites']);
+//        HelperFunctions.saveUserUidSharedPreference(userInfo.documents[0].data['id']);
       });
 
       return userFromFirebaseUser(user);
@@ -93,11 +92,11 @@ class AuthService {
   //sign out
   Future signOut() async {
     try {
-      HelperFunctions.saveUserUidSharedPreference('');
-      HelperFunctions.saveUsernameSharedPreference('');
-      HelperFunctions.saveUserImageSharedPreference('');
-      HelperFunctions.saveUserFavoritesSharedPreference([]);
-      HelperFunctions.saveUserLoggedInSharedPreference(false);
+//      HelperFunctions.saveUserUidSharedPreference('');
+//      HelperFunctions.saveUsernameSharedPreference('');
+//      HelperFunctions.saveUserImageSharedPreference('');
+//      HelperFunctions.saveUserFavoritesSharedPreference([]);
+//      HelperFunctions.saveUserLoggedInSharedPreference(false);
       return await _auth.signOut();
     } catch (e) {
       print(e.toString());
