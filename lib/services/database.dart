@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:small_talk/models/user.dart';
 import 'package:small_talk/models/user_profile.dart';
-import 'package:small_talk/shared/helper_functions.dart';
 
 class DatabaseService {
   final String uid;
@@ -14,9 +13,6 @@ class DatabaseService {
 
   Future updateUserProfile(
       String email, String username, String bio, String image, String id, List favorites) async {
-
-    HelperFunctions.saveUsernameSharedPreference(username);
-    HelperFunctions.saveUserImageSharedPreference(image);
 
     return await userProfiles.document(uid).setData({
       'email': email,
@@ -70,13 +66,13 @@ class DatabaseService {
   getUserByUsername(String username) async {
     return await Firestore.instance.collection('profile')
         .where("username", isEqualTo: username)
-        .getDocuments();
+        .getDocuments().catchError((e) {print(e.toString());});
   }
 
   getUserByUid(String uid) async {
     return await Firestore.instance.collection('profile')
         .where("uid", isEqualTo: uid)
-        .getDocuments();
+        .getDocuments().catchError((e) {print(e.toString());});
   }
 
   getUserByEmail(String email) async {
@@ -89,6 +85,30 @@ class DatabaseService {
     try{
       Firestore.instance.collection('conversation')
           .document(conversationId).setData(conversationMap);
+    } catch(e) {
+      print(e.toString());
+    }
+  }
+
+  createTopic(String topic){
+    try{
+      Firestore.instance.collection('topics')
+          .document(topic)
+          .setData({'topic name': topic});
+    }catch(e){
+      print(e.toString());
+    }
+  }
+
+//  1QW0sV6BD03m3agWFRvr
+
+  createPost(String topic, postMap){
+    try{
+      Firestore.instance.collection('topics')
+          .document(topic)
+          .collection('posts')
+          .document(postMap['post'])
+          .setData(postMap);
     } catch(e) {
       print(e.toString());
     }
@@ -118,7 +138,7 @@ class DatabaseService {
 
   getTopics()async{
     return await Firestore.instance.collection('topics')
-        .orderBy("topic")
+        .orderBy('topic name')
         .snapshots();
   }
 

@@ -23,7 +23,7 @@ class _TopicBoardState extends State<TopicBoard> {
           return AlertDialog(
             content: Stack(
             overflow: Overflow.visible,
-            children: [PostForm()],
+            children: [PostForm(widget.topic)],
         ),
       );
     });

@@ -28,6 +28,7 @@ class _SearchFormState extends State<SearchForm> {
   }
 
   Widget searchList(loggedInUser) {
+    print(searchSnapshot);
     return searchSnapshot != null
         ? ListView.builder(
             shrinkWrap: true,
@@ -38,8 +39,7 @@ class _SearchFormState extends State<SearchForm> {
                 image: searchSnapshot.documents[0].data["image"],
                 loggedInUser: loggedInUser,
               );
-            })
-        : Container();
+            }) : Container();
   }
 
   Widget SearchTile({String username, String image, UserData loggedInUser}) {
