@@ -53,7 +53,7 @@ class _PostFormState extends State<PostForm> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(
-                    "Drop a Topic",
+                    "Drop a Chat",
                   style: TextStyle(
                     color: Colors.red[900],
                     fontSize: 22.0,

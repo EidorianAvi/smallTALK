@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:small_talk/screens/topics/post_form.dart';
+import 'package:small_talk/screens/topics/post_tile.dart';
+import 'package:small_talk/services/database.dart';
 
 class TopicBoard extends StatefulWidget {
 
@@ -14,7 +16,41 @@ class TopicBoard extends StatefulWidget {
 class _TopicBoardState extends State<TopicBoard> {
 
   TextEditingController messageController = new TextEditingController();
+  DatabaseService databaseService = DatabaseService();
+  Stream postStream;
 
+  @override
+  void initState() {
+    databaseService.getPosts(widget.topic)
+        .then((val) {
+            setState(() {
+              postStream = val;
+            });
+    });
+    super.initState();
+  }
+
+  Widget postList() {
+    return postStream != null ? StreamBuilder(
+        stream: postStream,
+        builder: (context, snapshot){
+          return snapshot.hasData && snapshot.data.documents.length > 0 ? ListView.builder(
+              itemCount: snapshot.data.documents.length,
+              itemBuilder: (context, index){
+                return PostTile(snapshot.data.documents[index].data['post']);
+              }) : Center(
+            child: Container(
+                child: Text(
+                    "Currently No Posts",
+                  style: TextStyle(
+                    color: Colors.grey[700].withOpacity(.7),
+                    fontSize: 30.0,
+                  ),
+                ),
+            ),
+          );
+        }) : Container();
+  }
 
   postTopicForm(context) {
     return showDialog(
@@ -52,9 +88,7 @@ class _TopicBoardState extends State<TopicBoard> {
           ),
         ),
       ),
-      body: Container(
-        color: Colors.grey[400]
-      ),
+      body: postStream != null ? postList() : Container(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           postTopicForm(context);

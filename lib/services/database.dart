@@ -136,9 +136,17 @@ class DatabaseService {
         .snapshots();
   }
 
-  getTopics()async{
+  getTopics() async{
     return await Firestore.instance.collection('topics')
         .orderBy('topic name')
+        .snapshots();
+  }
+
+  getPosts(String topic) async{
+    return await Firestore.instance.collection('topics')
+        .document(topic)
+        .collection("posts")
+        .where('isTaken', isEqualTo: false)
         .snapshots();
   }
 
