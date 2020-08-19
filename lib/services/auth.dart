@@ -30,16 +30,9 @@ class AuthService {
           email: email, password: password);
       FirebaseUser user = result.user;
 
-//      HelperFunctions.saveUserLoggedInSharedPreference(true);
-//      HelperFunctions.saveUserEmailSharedPreference(email);
-
       databaseService.getUserByEmail(email)
         .then((val) {
           userInfo = val;
-//          HelperFunctions.saveUsernameSharedPreference(userInfo.documents[0].data['username']);
-//          HelperFunctions.saveUserImageSharedPreference(userInfo.documents[0].data['image']);
-//          HelperFunctions.saveUserFavoritesSharedPreference(userInfo.documents[0].data['favorites']);
-//          HelperFunctions.saveUserUidSharedPreference(userInfo.documents[0].data['id']);
       });
 
       return userFromFirebaseUser(user);
@@ -61,16 +54,9 @@ class AuthService {
       await DatabaseService(uid: user.uid).updateUserProfile(
           email, "Temp Username", "Short bio here", "assets/avatar.png", user.uid.toString(), []);
 
-//      HelperFunctions.saveUserLoggedInSharedPreference(true);
-//      HelperFunctions.saveUserEmailSharedPreference(email);
-
       databaseService.getUserByEmail(email)
           .then((val) {
         userInfo = val;
-//        HelperFunctions.saveUsernameSharedPreference(userInfo.documents[0].data['username']);
-//        HelperFunctions.saveUserImageSharedPreference(userInfo.documents[0].data['image']);
-//        HelperFunctions.saveUserFavoritesSharedPreference(userInfo.documents[0].data['favorites']);
-//        HelperFunctions.saveUserUidSharedPreference(userInfo.documents[0].data['id']);
       });
 
       return userFromFirebaseUser(user);
@@ -92,11 +78,6 @@ class AuthService {
   //sign out
   Future signOut() async {
     try {
-//      HelperFunctions.saveUserUidSharedPreference('');
-//      HelperFunctions.saveUsernameSharedPreference('');
-//      HelperFunctions.saveUserImageSharedPreference('');
-//      HelperFunctions.saveUserFavoritesSharedPreference([]);
-//      HelperFunctions.saveUserLoggedInSharedPreference(false);
       return await _auth.signOut();
     } catch (e) {
       print(e.toString());

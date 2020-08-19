@@ -42,6 +42,8 @@ class _ProfileState extends State<Profile> {
       builder: (context, snapshot) {
         if (!snapshot.hasData) return Text('');
 
+        UserData userData = snapshot.data;
+
         return Padding(
           padding: const EdgeInsets.only(top: 60.0),
           child: Column(
@@ -103,7 +105,7 @@ class _ProfileState extends State<Profile> {
                 onPressed: () => _showUpdatePanel(),
               ),
               SizedBox(height: 25.0),
-              Favorites(),
+              Favorites(userData),
             ],
           ),
         );

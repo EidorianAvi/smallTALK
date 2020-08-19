@@ -69,21 +69,25 @@ class TopicTile extends StatelessWidget {
                       fontSize: 20.0
                   ),
                 ),
-                IconButton(
-                  iconSize: 22.0,
-                  icon: !userData.favorites.contains(topic) ?
-                  Icon(
-                    Icons.star_border,
-                    color: Colors.grey,
-                  )
-                  : Icon(
-                    Icons.star,
-                    color: Colors.amberAccent
+                SizedBox(
+                  height: 20.0,
+                  width: 20.0,
+                  child: IconButton(
+                    padding: EdgeInsets.all(0.0),
+                    iconSize: 22.0,
+                    icon: !userData.favorites.contains(topic) ?
+                    Icon(
+                      Icons.star_border,
+                      color: Colors.grey,
+                    )
+                    : Icon(
+                      Icons.star,
+                      color: Colors.amberAccent
+                    ),
+                    onPressed: (){
+                      addToFavorites(userData, context);
+                    },
                   ),
-                  onPressed: (){
-                    print(userData.favorites);
-                    addToFavorites(userData, context);
-                  },
                 ),
               ],
             ),

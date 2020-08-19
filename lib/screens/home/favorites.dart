@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:small_talk/models/user.dart';
+import 'package:small_talk/screens/topics/topic_tile.dart';
 
 class Favorites extends StatefulWidget {
+
+  UserData userData;
+
+  Favorites(this.userData);
+
   @override
   _FavoritesState createState() => _FavoritesState();
 }
@@ -22,8 +29,9 @@ class _FavoritesState extends State<Favorites> {
                 color: Colors.white,
               ),
           ),
-          SizedBox(height: 110.0),
-          favorites == null
+          widget.userData.favorites.isEmpty
+          ? SizedBox(height: 110.0) : Container(),
+          widget.userData.favorites.isEmpty
               ? Container(
                 child: Text(
                     "No Favorites Selected",
@@ -33,7 +41,14 @@ class _FavoritesState extends State<Favorites> {
                     ),
                 ),
               )
-              : null
+              : Container(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                      itemCount: widget.userData.favorites.length,
+                      itemBuilder: (context, index){
+                        return TopicTile(widget.userData.favorites[index]);
+                      }),
+                ),
         ],
       ),
 

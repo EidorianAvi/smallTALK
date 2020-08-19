@@ -69,8 +69,6 @@ class _ConversationState extends State<Conversation> {
 
   sendMessage() {
 
-    print(Constants.myName);
-
     if(messageController.text.isNotEmpty){
       Map<String, dynamic>  messageMap  =  {
         "message": messageController.text,
