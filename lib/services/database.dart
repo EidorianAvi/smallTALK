@@ -48,7 +48,7 @@ class DatabaseService {
     }).toList();
   }
 
-  //get profile
+  //get profiles
 
   Stream<List<UserProfile>> get profiles {
     return userProfiles.snapshots().map(_profilesFromSnapshot);
@@ -82,7 +82,7 @@ class DatabaseService {
 
   getUserByUid(String uid) async {
     return await Firestore.instance.collection('profile')
-        .where("uid", isEqualTo: uid)
+        .where("id", isEqualTo: uid)
         .getDocuments().catchError((e) {print(e.toString());});
   }
 

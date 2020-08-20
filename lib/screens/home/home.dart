@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:small_talk/models/user.dart';
+import 'package:small_talk/screens/connections/connections_page.dart';
 import 'package:small_talk/screens/conversations/conversations_page.dart';
-import 'package:small_talk/screens/friends/connections_page.dart';
 import 'package:small_talk/screens/home/profile.dart';
 import 'package:small_talk/screens/logout.dart';
 import 'package:small_talk/screens/topics/topics_page.dart';
@@ -56,7 +56,7 @@ class _HomeState extends State<Home> {
       TopicsPage(),
       ConversationsPage(user.uid),
       Profile(),
-      ConnectionsPage(),
+      ConnectionsPage(user.uid),
       Logout(userLogout()),
     ];
 
