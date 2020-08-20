@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
-class FriendsPage extends StatefulWidget {
+class ConnectionsPage extends StatefulWidget {
   @override
-  _FriendsPageState createState() => _FriendsPageState();
+  _ConnectionsPageState createState() => _ConnectionsPageState();
 }
 
-class _FriendsPageState extends State<FriendsPage> {
+class _ConnectionsPageState extends State<ConnectionsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text(
-          "Friends",
+          "Connections",
           style: TextStyle(
               color: Colors.red[900]
           ),

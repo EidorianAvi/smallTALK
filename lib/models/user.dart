@@ -11,6 +11,7 @@ class UserData {
   final String bio;
   final String image;
   final List favorites;
+  final List connections;
 
-  UserData({this.email, this.uid, this.username, this.bio, this.image, this.favorites});
+  UserData({this.email, this.uid, this.username, this.bio, this.image, this.favorites, this.connections});
 }

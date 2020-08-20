@@ -5,6 +5,7 @@ class UserProfile {
   final String image;
   final String id;
   final List favorites;
+  final List connections;
 
-  UserProfile({this.email, this.username, this.bio, this.image, this.id, this.favorites});
+  UserProfile({this.email, this.username, this.bio, this.image, this.id, this.favorites, this.connections});
 }

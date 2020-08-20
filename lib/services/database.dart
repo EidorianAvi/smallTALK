@@ -12,7 +12,7 @@ class DatabaseService {
       Firestore.instance.collection('profile');
 
   Future updateUserProfile(
-      String email, String username, String bio, String image, String id, List favorites) async {
+      String email, String username, String bio, String image, String id, List favorites, List connections) async {
 
     return await userProfiles.document(uid).setData({
       'email': email,
@@ -21,6 +21,7 @@ class DatabaseService {
       'image': image,
       "id": id,
       "favorites": favorites,
+      "connections": connections,
     });
   }
 
@@ -42,6 +43,7 @@ class DatabaseService {
         image: doc.data['image'] ?? "",
         id: doc.data['id'] ?? "",
         favorites: doc.data['favorites'],
+        connections: doc.data['connections'],
       );
     }).toList();
   }
@@ -61,6 +63,7 @@ class DatabaseService {
       bio: snapshot.data['bio'],
       image: snapshot.data['image'],
       favorites: snapshot.data['favorites'],
+      connections: snapshot.data['connections'],
     );
   }
 
@@ -127,14 +130,6 @@ class DatabaseService {
         .add(messageMap).catchError((e) {print(e.toString());});
   }
 
-
-  addUserToConnections(user, String loggedInUserUid) {
-    Firestore.instance.collection('profile')
-        .document(loggedInUserUid)
-        .collection('connections')
-        .add(user);
-  }
-
   getConversationMessages(String  conversationId) async {
     return await Firestore.instance.collection('conversation')
         .document(conversationId)
@@ -163,5 +158,26 @@ class DatabaseService {
         .where('isTaken', isEqualTo: false)
         .snapshots();
   }
+
+
+  addToConnections({String loggedInUid, String connectionUid}) async {
+    DocumentReference docRef = Firestore.instance.collection('profile').document(loggedInUid);
+    DocumentSnapshot doc = await docRef.get();
+    List connections = doc.data['connections'];
+    if(connections.contains(connectionUid)){
+      docRef.updateData(
+          {
+            'connections': FieldValue.arrayRemove([connectionUid])
+          }
+      );
+    } else {
+      docRef.updateData(
+          {
+            "connections": FieldValue.arrayUnion([connectionUid])
+          }
+      );
+    }
+  }
+
 
 }

@@ -52,7 +52,7 @@ class AuthService {
       FirebaseUser user = result.user;
 
       await DatabaseService(uid: user.uid).updateUserProfile(
-          email, "Temp Username", "Short bio here", "assets/avatar.png", user.uid.toString(), []);
+          email, "Temp Username", "Short bio here", "assets/avatar.jpg", user.uid.toString(), [], []);
 
       databaseService.getUserByEmail(email)
           .then((val) {

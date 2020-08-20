@@ -59,7 +59,7 @@ class _ProfileState extends State<Profile> {
                     child: SizedBox(
                       width: 180.0,
                       height: 180.0,
-                      child: (snapshot.data.image == 'assets/avatar.png')
+                      child: (snapshot.data.image == 'assets/avatar.jpg')
                       ? Image.asset(
                         "assets/avatar.jpg",
                         fit: BoxFit.fill

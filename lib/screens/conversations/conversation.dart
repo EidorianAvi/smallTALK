@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:small_talk/models/user.dart';
 import 'package:small_talk/screens/conversations/message_tile.dart';
 import 'package:small_talk/services/database.dart';
 import 'package:small_talk/shared/constants.dart';
@@ -11,6 +14,7 @@ class Conversation extends StatefulWidget {
   String loggedInUser;
   String loggedInUserImage;
   final String conversationId;
+
 
   Conversation(this.username, this.image, this.loggedInUser, this.loggedInUserImage , this. conversationId);
 
@@ -27,18 +31,28 @@ class _ConversationState extends State<Conversation> {
   Stream messageStream;
   DatabaseService databaseService = DatabaseService();
   TextEditingController messageController = new TextEditingController();
+  QuerySnapshot otherUser;
 
 
   @override
   void initState() {
+    getOtherUser();
     databaseService.getConversationMessages(widget.conversationId)
       .then((value){
         setState(() {
           messageStream = value;
-//          print(messageStream);
         });
     });
     super.initState();
+  }
+
+  getOtherUser() {
+     databaseService.getUserByUsername(username).then((val){
+      setState((){
+        otherUser = val;
+      });
+    });
+
   }
 
   Widget messageList(){
@@ -84,69 +98,97 @@ class _ConversationState extends State<Conversation> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            icon: Icon(
-                Icons.person_add,
-              color: Colors.red[900],
-            ),
-            onPressed: (){},
-          ),
-        ],
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.red[900],
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
 
-        ),
-        backgroundColor: Colors.white,
-        title: Text(
-          username,
-          style: TextStyle(
-            color: Colors.red[900],
-          ),
-        ),
-      ),
-      body: Container(
-        child: Stack(
-          children: [
-            messageList(),
-            Container(
-              margin: EdgeInsets.only(top: 2.0),
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                        child:TextField(
-                          controller: messageController,
-                          decoration: textInputDecoration.copyWith(hintText: "Message"),
-                        ),
-                    ),
-                    IconButton(
-                      icon: Icon(
-                        Icons.send,
-                        color: Colors.red[900],
-                      ),
-                      onPressed: () {
-                        sendMessage();
-                      },
-                    ),
-                  ],
+    final user = Provider.of<User>(context);
+
+    return user != null ? StreamBuilder<UserData>(
+      stream: DatabaseService(uid: user.uid).userData,
+      builder: (context, snapshot) {
+
+        UserData userData = snapshot.data;
+
+        return snapshot.hasData && otherUser != null ? Scaffold(
+          appBar: AppBar(
+            actions: [
+              userData.connections.contains(otherUser.documents[0].data['id']) ?
+              IconButton(
+                icon: Icon(
+                    Icons.person,
+                  color: Colors.green,
                 ),
+                onPressed: (){
+                  databaseService.addToConnections(
+                    loggedInUid: userData.uid,
+                    connectionUid: otherUser.documents[0].data['id'],
+                  );
+                },
+              ) :  IconButton(
+                icon: Icon(
+                  Icons.person_add,
+                  color: Colors.red[900],
+                ),
+                onPressed: (){
+                  databaseService.addToConnections(
+                    loggedInUid: userData.uid,
+                    connectionUid: otherUser.documents[0].data['id'],
+                  );
+                },
+              )
+            ],
+            leading: IconButton(
+              icon: Icon(
+                Icons.arrow_back,
+                color: Colors.red[900],
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+
+            ),
+            backgroundColor: Colors.white,
+            title: Text(
+              username,
+              style: TextStyle(
+                color: Colors.red[900],
               ),
             ),
-          ],
-        ),
-      ),
-    );
+          ),
+          body: Container(
+            child: Stack(
+              children: [
+                messageList(),
+                Container(
+                  margin: EdgeInsets.only(top: 2.0),
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                    child: Row(
+                      children: [
+                        Expanded(
+                            child:TextField(
+                              controller: messageController,
+                              decoration: textInputDecoration.copyWith(hintText: "Message"),
+                            ),
+                        ),
+                        IconButton(
+                          icon: Icon(
+                            Icons.send,
+                            color: Colors.red[900],
+                          ),
+                          onPressed: () {
+                            sendMessage();
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ) : Container();
+      }
+    ) : Container();
   }
 }
 
