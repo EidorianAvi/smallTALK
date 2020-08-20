@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:small_talk/models/user.dart';
-import 'package:small_talk/screens/conversations/conversation.dart';
 import 'package:small_talk/services/database.dart';
 import 'package:small_talk/shared/constants.dart';
 
@@ -80,7 +79,7 @@ class _SearchFormState extends State<SearchForm> {
                 ),
                 onPressed: () {
                   Navigator.pop(context);
-                  startConversation(searchedUser, loggedInUser);
+                  startConversation(searchedUser, loggedInUser, context);
                 },
               ),
             ],
@@ -90,34 +89,7 @@ class _SearchFormState extends State<SearchForm> {
     );
   }
 
-  getConversationId(String a, String b) {
-    if (a.substring(0, 1).codeUnitAt(0) > b.substring(0, 1).codeUnitAt(0)) {
-      return "$b\_$a";
-    } else {
-      return "$a\_$b";
-    }
-  }
 
-  startConversation(searchedUser, loggedInUser) {
-    List<String> users = [searchedUser['username'], loggedInUser.username];
-    List<String> userIds = [searchedUser['id'], loggedInUser.uid];
-    List<String> userImages = [searchedUser['image'], loggedInUser.image];
-    String conversationId =
-        getConversationId(searchedUser['id'], loggedInUser.uid);
-    Map<String, dynamic> conversationMap = {
-      "users": users,
-      "userIds": userIds,
-      "userImages": userImages,
-      "conversationId": conversationId,
-      "time": DateTime.now().millisecondsSinceEpoch,
-    };
-    databaseService.createConversation(conversationId, conversationMap);
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => Conversation(searchedUser['username'],
-                searchedUser['image'], loggedInUser.username, loggedInUser.image, conversationId)));
-  }
 
   @override
   Widget build(BuildContext context) {

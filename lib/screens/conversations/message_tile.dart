@@ -44,7 +44,7 @@ class MessageTile extends StatelessWidget {
                       ? BorderRadius.all(Radius.circular(20.0))
                       : BorderRadius.all(Radius.circular(20.0)),
                   color: sentByMe
-                      ? Colors.red[900]
+                      ? Colors.red[600]
                       : Colors.black
               ),
               child: Text(

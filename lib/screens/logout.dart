@@ -20,7 +20,7 @@ class _LogoutState extends State<Logout> {
   }
 
   logUserOut() {
-    Timer(const Duration(milliseconds: 10), () {
+    Timer(const Duration(milliseconds: 1), () {
       setState(() {
         userLogout= widget.userLogout;
       });

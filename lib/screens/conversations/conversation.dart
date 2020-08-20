@@ -57,9 +57,7 @@ class _ConversationState extends State<Conversation> {
                     message: snapshot.data.documents[index].data["message"],
                     sentByMe: snapshot.data.documents[index].data['sentBy'] == widget.loggedInUser);
                 }),
-          ) : Container(
-            child: Text("Loading"),
-          );
+          ) : Container();
           }
       );
     } else {
@@ -88,6 +86,15 @@ class _ConversationState extends State<Conversation> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          IconButton(
+            icon: Icon(
+                Icons.person_add,
+              color: Colors.red[900],
+            ),
+            onPressed: (){},
+          ),
+        ],
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
@@ -96,6 +103,7 @@ class _ConversationState extends State<Conversation> {
           onPressed: () {
             Navigator.pop(context);
           },
+
         ),
         backgroundColor: Colors.white,
         title: Text(

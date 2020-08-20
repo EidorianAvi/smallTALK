@@ -62,13 +62,14 @@ class TopicTile extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                topic != null ?
                 Text(
                   topic,
                   style: TextStyle(
                       color: Colors.red[900],
                       fontSize: 20.0
                   ),
-                ),
+                ): Container(),
                 SizedBox(
                   height: 20.0,
                   width: 20.0,

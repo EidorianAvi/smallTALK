@@ -24,6 +24,14 @@ class DatabaseService {
     });
   }
 
+  Future updatePostStatus(String topic, String post) async {
+    Firestore.instance.collection("topics")
+        .document(topic)
+        .collection("posts")
+        .document(post)
+        .updateData({"isTaken": true});
+  }
+
   //Profile from snapshot
   List<UserProfile> _profilesFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
@@ -100,8 +108,6 @@ class DatabaseService {
     }
   }
 
-//  1QW0sV6BD03m3agWFRvr
-
   createPost(String topic, postMap){
     try{
       Firestore.instance.collection('topics')
@@ -119,6 +125,14 @@ class DatabaseService {
         .document(conversationId)
         .collection('messages')
         .add(messageMap).catchError((e) {print(e.toString());});
+  }
+
+
+  addUserToConnections(user, String loggedInUserUid) {
+    Firestore.instance.collection('profile')
+        .document(loggedInUserUid)
+        .collection('connections')
+        .add(user);
   }
 
   getConversationMessages(String  conversationId) async {

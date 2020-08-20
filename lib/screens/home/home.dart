@@ -8,8 +8,6 @@ import 'package:small_talk/screens/logout.dart';
 import 'package:small_talk/screens/topics/topics_page.dart';
 import 'package:small_talk/services/auth.dart';
 import 'package:provider/provider.dart';
-import 'package:small_talk/shared/constants.dart';
-import 'package:small_talk/shared/helper_functions.dart';
 
 
 class Home extends StatefulWidget {
@@ -20,17 +18,6 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final AuthService _auth = AuthService();
   int _currentIndex = 2;
-
-
-  @override
-  void initState() {
-    getUserInfo();
-    super.initState();
-  }
-
-  getUserInfo() async {
-    Constants.myName =  await HelperFunctions.getUsernameSharedPreferences();
-  }
 
    userLogout() {
     return CupertinoAlertDialog(

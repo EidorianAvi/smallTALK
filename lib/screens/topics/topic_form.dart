@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:small_talk/models/user.dart';
 import 'package:small_talk/services/database.dart';
 import 'package:small_talk/shared/constants.dart';
 

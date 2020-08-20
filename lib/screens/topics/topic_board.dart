@@ -37,7 +37,13 @@ class _TopicBoardState extends State<TopicBoard> {
           return snapshot.hasData && snapshot.data.documents.length > 0 ? ListView.builder(
               itemCount: snapshot.data.documents.length,
               itemBuilder: (context, index){
-                return PostTile(snapshot.data.documents[index].data['post']);
+                return PostTile(
+                    topic: widget.topic,
+                    post: snapshot.data.documents[index].data['post'],
+                    posterName: snapshot.data.documents[index].data['postedBy'],
+                    posterImage: snapshot.data.documents[index].data['posterImage'],
+                    posterId: snapshot.data.documents[index].data['posterId'],
+                );
               }) : Center(
             child: Container(
                 child: Text(
@@ -96,7 +102,6 @@ class _TopicBoardState extends State<TopicBoard> {
         child: Icon(Icons.add, color: Colors.red[900]),
         backgroundColor: Colors.white,
       ),
-
     );
   }
 }
