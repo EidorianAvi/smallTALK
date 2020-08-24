@@ -1,0 +1,87 @@
+# small_talk
+
+A new and refreshing take on hobby and interest driven conversation to create and foster new connections. 
+
+## Table of Contents
+* [General Info](#general-info)
+* [Inspiration](#inspiration)
+* [Demonstration Video](#demonstration-video)
+* [Technologies](#technologies)
+* [Setup](#setup)
+* [Example Code](#example-code)
+* [Features](#features)
+* [Status](#status)
+* [Contact](#contact)
+* [License](#license)
+
+
+## General Info
+smallTalk is a social app that encourages one on one conversation and connection driven by hobby and interest based topics. A user can initiate or take up a topic they find interesting, converse with other users, and make and save connections for further discussion.
+
+## Inspiration 
+The inspiration behind smallTalk was due to the desire to always have someone to chat with a topic no matter how niche. There are plenty of forums out there but it's easy for your voice to be heard and it's easy to get lost in all the noise. Now there's a way to make that one on one conversation happen with someone with the same interests. 
+
+## Demonstration Video
+[smallTalk Youtube Demonstation](https://www.youtube.com/watch?v=aZMOCxSa3Yg)
+
+## Technologies 
+* Flutter - version 1.17
+* Dart - version 2.3
+* Android Studio - version 4.1
+* Cloud Firestore - version 0.12.9+4
+* Firebase Storage - version 3.1.6
+* Provider - version 3.1.0
+
+
+## Example Code
+```dart
+
+  Widget messageList(){
+    if(messageStream != null) {
+      return StreamBuilder(
+        stream: messageStream,
+          builder: (context, snapshot){
+          return snapshot.hasData ? SingleChildScrollView(
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: snapshot.data.documents.length,
+                itemBuilder: (context, index) {
+                return MessageTile(
+                    loggedInUserImage: widget.loggedInUserImage,
+                    otherUserImage: widget.image,
+                    message: snapshot.data.documents[index].data["message"],
+                    sentByMe: snapshot.data.documents[index].data['sentBy'] == widget.loggedInUser);
+                }),
+          ) : Container();
+          }
+      );
+    } else {
+      return Container();
+    }
+  }
+```
+
+## Features
+Current Features:
+* Customize profile with bio, profile pic, username, and favorite topics
+* Able to add and remove topics as well as favorite them
+* Create posts that other users can choose to create one on one chat rooms
+* Search users by username to create a conversation
+* Add other users to connections
+
+Future Features:
+* More profile customization
+* Dark Mode
+* News stream on home page to find interesting conversation starters
+* More accessability options
+
+## Status
+The application is fully functional and ready to be enjoyed at current status. Future updates and improvements are still a possibility for future renditions.
+
+## Contact
+Created by [Adrian Avila](https://www.linkedin.com/in/eidorianavi/).
+
+If you have any questions or comments feel free to reach out thank you for your time.
+
+## License 
+[Click to view](https://github.com/EidorianAvi/smallTALK/blob/master/LICENSE)
